@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Bhavi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #ffe4ec, #fff1f6, #fde2ff);
+      color: #334155;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      color: rgba(236, 72, 153, 0.35);
+      font-size: 32px;
+      z-index: 1;
+    }
+
+    .s1 { top: 30px; left: 30px; }
+    .s2 { top: 80px; right: 50px; }
+    .s3 { bottom: 100px; left: 40px; }
+    .s4 { bottom: 40px; right: 30px; }
+
+    h1 {
+      text-align: center;
+      font-size: 58px;
+      font-weight: bold;
+      margin-bottom: 18px;
+      background: linear-gradient(90deg, #e11d48, #f43f5e, #d946ef);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeUp 0.8s ease;
+    }
+
+    .subtitle {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      font-size: 21px;
+      line-height: 1.7;
+      color: #64748b;
+      animation: fadeUp 1s ease;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid #f9a8d4;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      margin-bottom: 18px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #475569;
+    }
+
+    .hero h2 {
+      font-size: 44px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: #1e293b;
+    }
+
+    .hero p {
+      font-size: 19px;
+      line-height: 1.8;
+      color: #64748b;
+    }
+
+    .letter-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .letter-button {
+      position: relative;
+      width: 340px;
+      height: 235px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      animation: floaty 2.4s ease-in-out infinite;
+    }
+
+    .glow {
+      position: absolute;
+      inset: -12px;
+      border-radius: 32px;
+      background: rgba(244, 114, 182, 0.25);
+      filter: blur(18px);
+      z-index: 0;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 32px;
+      background: linear-gradient(135deg, #ec4899, #fb7185, #d946ef);
+      box-shadow: 0 18px 40px rgba(236, 72, 153, 0.25);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.6);
+      z-index: 1;
+      transition: transform 0.8s ease;
+    }
+
+    .envelope-top {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 52%;
+      background: linear-gradient(to bottom, #f472b6, #ec4899);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 0.8s ease;
+      z-index: 2;
+    }
+
+    .envelope-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 58%;
+      background: linear-gradient(to top, #f43f5e, #ec4899);
+    }
+
+    .mail-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+
+    .mail-icon {
+      width: 82px;
+      height: 82px;
+      background: white;
+      border-radius: 50%;
+      border: 4px solid #fbcfe8;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      position: relative;
+    }
+
+    .small-heart {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ec4899;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .open-text {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      z-index: 3;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .letter-button.shake {
+      animation: shake 0.65s ease 2;
+    }
+
+    .letter-button.opening .envelope-top {
+      transform: rotateX(-140deg);
+    }
+
+    .memories {
+      max-width: 900px;
+      margin: 0 auto 70px;
+    }
+
+    .memories h3 {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 35px;
+      color: #1e293b;
+    }
+
+    .photo-line {
+      display: flex;
+      margin-bottom: 28px;
+    }
+
+    .photo-line.left {
+      justify-content: flex-start;
+    }
+
+    .photo-line.right {
+      justify-content: flex-end;
+    }
+
+    .photo-card {
+      width: 78%;
+      max-width: 360px;
+      background: rgba(255,255,255,0.82);
+      padding: 10px;
+      border-radius: 30px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+      border: 1px solid rgba(255,255,255,0.7);
+      overflow: hidden;
+    }
+
+    .photo-line.left .photo-card {
+      transform: rotate(-2deg);
+    }
+
+    .photo-line.right .photo-card {
+      transform: rotate(2deg);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 24px;
+      display: block;
+    }
+
+    .video-section {
+      max-width: 900px;
+      margin: 0 auto;
+      display: none;
+      animation: fadeUp 0.8s ease;
+    }
+
+    .video-section.show {
+      display: block;
+    }
+
+    .video-title {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .video-title h2 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      color: #1e293b;
+    }
+
+    .video-title p {
+      font-size: 20px;
+      color: #64748b;
+    }
+
+    .video-box {
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+      border-radius: 32px;
+      padding: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    video {
+      width: 100%;
+      border-radius: 24px;
+      display: block;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #64748b;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .flying-heart {
+      position: fixed;
+      bottom: 20px;
+      color: #fb7185;
+      pointer-events: none;
+      z-index: 99;
+      animation: flyUp linear forwards;
+    }
+
+    @keyframes flyUp {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-760px) translateX(var(--xmove)) scale(1.1) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes shake {
+      0% { transform: rotate(0deg) scale(1); }
+      20% { transform: rotate(-3deg) scale(1.03); }
+      40% { transform: rotate(3deg) scale(0.98); }
+      60% { transform: rotate(-3deg) scale(1.05); }
+      80% { transform: rotate(2deg) scale(1); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+
+      .hero h2 {
+        font-size: 34px;
+      }
+
+      .video-title h2 {
+        font-size: 36px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 40px 16px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .subtitle {
+        font-size: 17px;
+      }
+
+      .letter-button {
+        width: 290px;
+        height: 210px;
+      }
+
+      .hero h2 {
+        font-size: 28px;
+      }
+
+      .photo-card {
+        width: 88%;
+      }
+
+      .photo-card img {
+        height: 220px;
+      }
+
+      .memories h3 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkle s1">✦</div>
+  <div class="sparkle s2">♡</div>
+  <div class="sparkle s3">✦</div>
+  <div class="sparkle s4">♡</div>
+
+  <div class="container">
+    <h1>Happy Birthday Bhavi 💖</h1>
+    <p class="subtitle">
+      A small world made with love, memories, and one special surprise waiting for you.
+    </p>
+
+    <section class="hero" id="heroSection">
+      <div>
+        <div class="tag">💗 For Bhavi</div>
+        <h2>Touch the message box and open your birthday surprise</h2>
+        <p>
+          The message box will reveal a special video made only for you.
+        </p>
+      </div>
+
+      <div class="letter-wrap">
+        <button class="letter-button" id="openBtn">
+          <div class="glow"></div>
+          <div class="envelope" id="envelope">
+            <div class="envelope-top" id="envelopeTop"></div>
+            <div class="envelope-bottom"></div>
+            <div class="mail-center">
+              <div class="mail-icon">
+                💌
+                <div class="small-heart">♥</div>
+              </div>
+            </div>
+            <div class="open-text">Open My Message</div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <section class="memories" id="memoriesSection">
+      <h3>Bestestttt Friend 💌</h3>
+
+      <div class="photo-line left"><div class="photo-card"><img src="photos/1.jpg" alt="Bhavi memory 1"></div></div>
+      <div class="photo-line right"><div class="photo-card"><img src="photos/2.jpg" alt="Bhavi memory 2"></div></div>
+      <div class="photo-line left"><div class="photo-card"><img src="photos/3.jpg" alt="Bhavi memory 3"></div></div>
+      <div class="photo-line right"><div class="photo-card"><img src="photos/4.jpg" alt="Bhavi memory 4"></div></div>
+      <div class="photo-line left"><div class="photo-card"><img src="photos/5.jpg" alt="Bhavi memory 5"></div></div>
+      <div class="photo-line right"><div class="photo-card"><img src="photos/6.jpg" alt="Bhavi memory 6"></div></div>
+    </section>
+
+    <section class="video-section" id="videoSection">
+      <div class="video-title">
+        <h2>Your Surprise Video 🎬</h2>
+        <p>Made only for Bhavi, with love.</p>
+      </div>
+      <div class="video-box">
+        <video id="birthdayVideo" src="video.mp4" controls></video>
+      </div>
+    </section>
+  </div>
+
+  <div class="footer">Made with love for Bhavi 💕</div>
+
+  <script>
+    const openBtn = document.getElementById('openBtn');
+    const videoSection = document.getElementById('videoSection');
+    const memoriesSection = document.getElementById('memoriesSection');
+    const birthdayVideo = document.getElementById('birthdayVideo');
+
+    function createFlyingHearts() {
+      for (let i = 0; i < 28; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'flying-heart';
+        heart.innerHTML = i % 3 === 0 ? '💖' : '♥';
+        heart.style.left = (6 + ((i * 11) % 88)) + '%';
+        heart.style.fontSize = (16 + (i % 4) * 10) + 'px';
+        heart.style.animationDuration = (1.7 + (i % 5) * 0.22) + 's';
+        heart.style.animationDelay = (i % 8) * 0.08 + 's';
+        heart.style.setProperty('--xmove', ((i % 2 === 0 ? 24 : -24) + 'px'));
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 2600);
+      }
+    }
+
+    openBtn.addEventListener('click', function () {
+      if (openBtn.classList.contains('opening')) return;
+
+      openBtn.classList.add('shake');
+      openBtn.classList.add('opening');
+      createFlyingHearts();
+
+      setTimeout(() => {
+        memoriesSection.style.display = 'none';
+        document.getElementById('heroSection').style.display = 'none';
+        videoSection.classList.add('show');
+        videoSection.scrollIntoView({ behavior: 'smooth' });
+        birthdayVideo.play();
+      }, 1800);
+    });
+  </script>
+</body>
+</html>
